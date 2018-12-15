@@ -16,7 +16,7 @@ app.get("/", (req,res) => {
     );
 });
 
-app.get("api/v1/pokemon/:pokemonName", (req,res) => {
+app.get("/api/v1/pokemon/:pokemonName", (req,res) => {
     let pokemonName = req.params.pokemonName;
     console.log(`Ok getting ${pokemonName} info`);
     axios.get("http://es.pokemon.wikia.com/wiki/"+pokemonName).then((response) => {
