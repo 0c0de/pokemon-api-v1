@@ -4,7 +4,7 @@ const axios = require('axios');
 
 
 const app = express();
-const port = 3000 || proccess.env.PORT;
+const port = proccess.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log("Someone likes pokemons");
