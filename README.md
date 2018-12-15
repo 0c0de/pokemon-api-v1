@@ -1,4 +1,4 @@
-#Pokemon Api
+# Pokemon Api
 
 This is an API-Like-Thingy of pokemon because I need to do one on my own 
 
@@ -443,6 +443,19 @@ Example of usage
 	localization: Array with nested Object,
 	attack: Array with nested Object
 }
+
+````
+
+# Ok, but how can I use it?
+
+Pretty simple, follow this steps:
+
+1. Run the following command: ```` git clone https://github.com/0c0de/pokemon-api-v1 && cd pokemon-api-v1 ````
+
+2. Now run ```` npm install ````
+
+3. Profit!
+
 
 # Notes
 
