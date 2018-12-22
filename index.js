@@ -75,16 +75,11 @@ app.get("/api/v1/pokemon/:pokemonName", (req,res) => {
             });
             if(index > 0){
                 let infoAttack = $(el).children('td').text();
-                let objAttacks = {};
+                let arrAttacks = [];
                 infoAttack = infoAttack.split("\n");
-                let name = '';
                 let maxIndex = arrayGenerations.length + 1;
                 for(x = 0; x < maxIndex; x++){
-                    if(x != maxIndex - 1){
-                        objAttacks[arrayGenerations[x]] = infoAttack[x].trim();
-                    }else{
-                        objAttacks["attack"] = infoAttack[x].trim();
-                    }
+                    arrAttacks[x] = infoAttack[x].trim();
                 }
                 arrayAttacks[index] = objAttacks;
             }
