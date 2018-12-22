@@ -24,7 +24,8 @@ app.get("/api/v1/pokemon/:pokemonName", (req,res) => {
         let arrayEvoImages = [];
         let arrayLocalization = [];
         let arrayAttacks = [];
-        
+        let arrayGenerations = [];
+        let maxIndex = 0;
         //Pokemon Name
         let pokemonNameMod = capitalizeFirstChar(pokemonName);
 
@@ -61,45 +62,29 @@ app.get("/api/v1/pokemon/:pokemonName", (req,res) => {
 
         //Atacks
         let attacks = $('table.movnivel tbody tr').each((index, el) => {
+
+            $(el).children('th.movedicion').each((index, el) => {
+                let editionDetected = $(el).text().trim();
+                console.log(editionDetected+", ");
+                if(!editionDetected.includes('<img')){
+                    arrayGenerations[index] = editionDetected;
+                }else{
+                    let name = editionDetected.split('"')[3];
+                    arrayGenerations[index] = detectName(name);
+                }
+            });
             if(index > 0){
                 let infoAttack = $(el).children('td').text();
                 let objAttacks = {};
                 infoAttack = infoAttack.split("\n");
                 let name = '';
-                for(x = 0; x < 10; x++){
-                    switch(x){
-                        case 0:
-                            name = "rojo_fuego";
-                            break;
-                        case 1:
-                            name = "pokemon_amarillo";
-                            break;
-                        case 2:
-                            name = "generacion_2";
-                            break;
-                        case 3:
-                            name = "generacion_3";
-                            break;
-                        case 4:
-                            name = "generacion_4";
-                            break;
-                        case 5:
-                            name = "generacion_5";
-                            break;
-                        case 6:
-                            name = "pokemon_XY";
-                            break;
-                        case 7:
-                            name = "Pokemon_ROZA";
-                            break;
-                        case 8:
-                            name = "generacion_8";
-                            break;
-                        case 9:
-                            name ="attack";
-                            break;
+                let maxIndex = arrayGenerations.length + 1;
+                for(x = 0; x < maxIndex; x++){
+                    if(x != maxIndex - 1){
+                        objAttacks[arrayGenerations[x]] = infoAttack[x].trim();
+                    }else{
+                        objAttacks["attack"] = infoAttack[x].trim();
                     }
-                    objAttacks[name] = infoAttack[x].trim();
                 }
                 arrayAttacks[index] = objAttacks;
             }
@@ -112,6 +97,7 @@ app.get("/api/v1/pokemon/:pokemonName", (req,res) => {
             info : pokemonInfo,
             evolutions: arrayEvoImages,
             localization: arrayLocalization,
+            editions: arrayGenerations,
             attack: arrayAttacks, 
         };
 
@@ -138,6 +124,39 @@ function escapeLineBreaks(str){
 
 function capitalizeFirstChar(str){
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function detectName(str){
+    switch(str){
+        case 'Primera Generación':
+            str = 'generation_1';
+            break;
+        
+        case 'Segunda Generación':
+            str = 'generation_2';
+            break;
+        
+        case 'Tercera Generación':
+            str = 'generation_3';
+            break;
+        
+        case 'Cuarta Generación':
+            str = 'generation_4';
+            break;
+        
+        case 'Quinta Generación':
+            str = 'generation_5';
+            break;
+    
+        case 'Sexta Generación':
+            str = 'generation_6';
+            break;
+    
+        case 'Septima Generación':
+            str = 'generation_7';
+            break;
+    }
+    return str;
 }
 
 function cleanNullValuesArr(arr){
